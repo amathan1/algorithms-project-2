@@ -17,7 +17,7 @@ int
 Tromino::buildParams(array <int, 24> &params, int row_s, int col_s, int row_e, int col_e, int r_hole, int c_hole)
 {
 	/* Builds parameters for recursive calls
-	   Computes which half the hole is in, and builds
+	   Computes which half the hole is in, and builds parameters
 	*/
 
 	int row_half = row_s + (row_e-row_s)/2;
@@ -110,7 +110,7 @@ Tromino::printTromino()
 		for (int j = 0; j < this->num; j++) {
 			cout << tiles[i][j] << "\t";
 		}
-		cout << endl;
+		cout << endl << endl;
 	}
 	return 0;
 }
@@ -126,8 +126,6 @@ main(int argc, char* argv[])
 	Tromino tromino(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]));
 	tromino.trominoTile();
 	tromino.printTromino();
-
-	cout << "Tromino built" << endl;
 
 	return 0;
 }
