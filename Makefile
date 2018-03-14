@@ -9,3 +9,6 @@ tromino:
 
 floyd:
 	g++ floyd.cpp -o floyd.out -g -std=c++11
+
+clean:
+	rm -f *out

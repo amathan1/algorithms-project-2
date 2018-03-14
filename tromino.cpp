@@ -7,7 +7,7 @@ Tromino::trominoTile()
 	this->tiles = (int**)calloc(this->num, sizeof(int*));
 	for (int i = 0; i < this->num; i++)	this->tiles[i] = (int*)calloc(this->num, sizeof(int));
 
-	buildTromino(0, 0, 2*k, 2*k, this->r, this->c);
+	buildTromino(0, 0, this->num, this->num, this->r, this->c);
 
 	return 0;
 }
@@ -16,7 +16,8 @@ Tromino::trominoTile()
 int 
 Tromino::buildParams(array <int, 24> &params, int row_s, int col_s, int row_e, int col_e, int r_hole, int c_hole)
 {
-	/* Builds parameters for recursive calls
+	/* 
+	   Builds parameters for recursive calls
 	   Computes which half the hole is in, and builds parameters
 	*/
 
@@ -70,6 +71,7 @@ Tromino::buildParams(array <int, 24> &params, int row_s, int col_s, int row_e, i
 int 
 Tromino::buildTromino(int row_s, int col_s, int row_e, int col_e, int r_hole, int c_hole)
 {
+	/*	Builds the tromino 	*/
 
 	// Terminating condition
 	if (((row_e - row_s) == 2) && ((col_e - col_s) == 2))
@@ -126,6 +128,7 @@ main(int argc, char* argv[])
 	Tromino tromino(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]));
 	tromino.trominoTile();
 	tromino.printTromino();
+	tromino.~Tromino();
 
 	return 0;
 }
