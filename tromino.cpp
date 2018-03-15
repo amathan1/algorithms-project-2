@@ -88,18 +88,16 @@ Tromino::buildTromino(int row_s, int col_s, int row_e, int col_e, int r_hole, in
 			}
 		}
 		this->cnt++;
+		return 0;
 	}
 
-	else
-	{
-		array <int, 24> params;	// Arguments for all the four recursive calls, six each
-		buildParams(params, row_s, col_s, row_e, col_e, r_hole, c_hole);
+	array <int, 24> params;	// Arguments for all the four recursive calls, six each
+	buildParams(params, row_s, col_s, row_e, col_e, r_hole, c_hole);
 
-		buildTromino(params[0], params[1], params[2], params[3], params[4], params[5]);
-		buildTromino(params[6], params[7], params[8], params[9], params[10], params[11]);
-		buildTromino(params[12], params[13], params[14], params[15], params[16], params[17]);
-		buildTromino(params[18], params[19], params[20], params[21], params[22], params[23]);
-	}
+	buildTromino(params[0], params[1], params[2], params[3], params[4], params[5]);
+	buildTromino(params[6], params[7], params[8], params[9], params[10], params[11]);
+	buildTromino(params[12], params[13], params[14], params[15], params[16], params[17]);
+	buildTromino(params[18], params[19], params[20], params[21], params[22], params[23]);
 
 	return 0;
 }

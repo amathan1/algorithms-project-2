@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <assert.h>
 
 using namespace std;
 
@@ -15,7 +16,7 @@ public:
 
 	int findShortestPaths();
 
-	int recursiveHelper();
+	int printMatrices();
 
 	int readFile();
 
@@ -25,6 +26,5 @@ private:
 	int numNodes = 0;
 	string fileName;
 	int **dist;
-	int ***path;
-
+	vector< vector< vector<int> > > path;
 };
