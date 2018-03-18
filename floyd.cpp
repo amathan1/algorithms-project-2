@@ -117,6 +117,8 @@ main(int argc, char* argv[])
 
 	floyd.readFile();
 
+	cout << "Before finding shortest paths: " << endl;
+
 	floyd.printMatrices();
 
 	floyd.findShortestPaths();
