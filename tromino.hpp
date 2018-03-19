@@ -24,8 +24,10 @@ public:
 
 
 private:
-	int k, r, c, num;	// Parameters
+	int k, r, c, num, cnt = 0;	// Parameters
+
 	int **tiles;		// Tromino board
+
 	int numNodes = 0;	// Counter variable
 
 };

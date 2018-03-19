@@ -21,12 +21,16 @@ public:
 
 	int findMinCost(vector<float>&);
 
+	int buildTree(int, int, int, vector < vector <int> >&);
+
 	int printOBST();
 
 private:
 
 	float **matrix;
+
 	int **roots;
+	
 	int numNodes;
 
 };

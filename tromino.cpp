@@ -18,7 +18,7 @@ Tromino::buildParams(array <int, 24> &params, int row_s, int col_s, int row_e, i
 {
 	/* 
 	   Builds parameters for recursive calls
-	   Computes which half the hole is in, and builds parameters
+	   Figures which half the hole is in, creates three other holes and updates the matrix
 	*/
 
 	int row_half = row_s + (row_e-row_s)/2;
@@ -71,7 +71,18 @@ Tromino::buildParams(array <int, 24> &params, int row_s, int col_s, int row_e, i
 int 
 Tromino::buildTromino(int row_s, int col_s, int row_e, int col_e, int r_hole, int c_hole)
 {
-	/*	Builds the tromino 	*/
+	/*	Builds the tromino 
+		row_s -> row start
+		col_s -> col start
+		row_e -> row end
+		col_r -> col end
+		r_hole -> row where hole is present
+		c_hole -> col where hole is present
+		(row_s, col_s) gives where square starts
+		(row_e, col_e) gives where square ends
+		(r_hole, c_hole) is where the hole is
+
+	*/
 
 	// Terminating condition
 	if (((row_e - row_s) == 2) && ((col_e - col_s) == 2))

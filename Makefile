@@ -1,5 +1,5 @@
 all:
-	obst tromino floyd
+	make tromino floyd obst
 
 obst:
 	g++ obst.cpp -o obst.out -g -std=c++11

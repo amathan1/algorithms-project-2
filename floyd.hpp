@@ -23,8 +23,11 @@ public:
 	int updateMatrix(vector<string>&);
 
 private:
-	int numNodes = 0;
 	string fileName;
-	int **dist;
-	vector< vector< vector<int> > > path;
+
+	int numNodes = 0;						// Number of nodes in the graph
+	
+	int **dist;								// Distances matrix
+	
+	vector< vector< vector<int> > > path;	// Shortest paths between nodes
 };
