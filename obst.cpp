@@ -85,10 +85,35 @@ OBST::findOptimalBST()
 
 
 int
+OBST::findDepth(vector < vector <int> > &depths)
+{
+	int depth = depths.size();
+	int cnt = 0;
+	int size;
+	
+	for (int i = 0; i < depths.size(); i++) {
+		size = depths[i].size();
+		cnt = 0;
+		for (int j = 0; j < size; j++) 
+			if (depths[i][j] > 0)	cnt++;
+		if (size == 0 || cnt == 0) {
+			depth = i;
+			break;
+		} else {
+			cnt += size;
+		  }
+	}
+		
+	return depth;
+}
+
+
+
+int
 OBST::printOBST()
 {
 
-	int cnt = 0; 
+	/* 
 	for (int i = 0; i < numNodes+1; i++) {
 		for (int j = 0; j < numNodes+1; j++) {
 			cout << this->matrix[i][j] << "\t";
@@ -96,53 +121,65 @@ OBST::printOBST()
 		cout << endl << endl;
 	}
 
-	/*cout << "This is roots : " << endl;
+	cout << "This is roots" << endl;
 
 	for (int i = 0; i < numNodes+1; i++) {
 		for (int j = 0; j < numNodes+1; j++) {
 			cout << this->roots[i][j] << "\t";
 		}
 		cout << endl << endl;
-	}*/
+	}
+	*/
 
 	vector < vector <int> > depths(numNodes);
-
 	buildTree(0, this->numNodes, 0, depths);
 
-	for (int i = 0; i < depths.size(); i++) {
-		if (depths[i].size() > 0) {
-			cout << "Depth " << i << ": ";
-			for (int j = 0; j < depths[i].size(); j++) {
-				cout << depths[i][j] << ", ";
-			}
-			cout << endl;
+	int depth = findDepth(depths);
+
+	for (int i = 0; i < depth; i++) {
+		cout << "Depth " << i << ": ";
+		for (int j = 0; j < depths[i].size(); j++) {
+			cout << depths[i][j] << ", ";
 		}
+		cout << endl;
 	}
 
 	return 0;	
 }
 
 
+
 int
 OBST::buildTree(int i, int j, int depth, vector < vector <int> > &depths)
 {
-
-	if (j-i == 1) {
-		if (depths[0].size() > 0 && depths[0][0] != j) {
-			depths[depth].push_back(j);
-		}	else if (depths[0].size() == 0) {
-				depths[depth].push_back(j);
-			}
-
-		return 0;
-	} else if (j - i == 2 && i == 0) {
-		buildTree(0, 1, depth, depths);
+	
+	if (i > this->numNodes+1){
+		depths[depth].push_back(0);
 		return 0;
 	}
 
-	depths[depth].push_back(this->roots[i][j]);
-	buildTree(i, this->roots[i][j], depth+1, depths);
-	buildTree(this->roots[i][j], j, depth+1, depths);
+	if (i == j) {
+		if (i == 0)	{
+			depths[depth].push_back(0);	
+		} else {
+			depths[depth].push_back(this->roots[j-1][j]);
+			buildTree(0, 0, depth+1, depths);
+			buildTree(0, 0, depth+1, depths);
+			}
+		return 0;
+	}
+
+	int next;
+	int current = this->roots[i][j];
+	depths[depth].push_back(current);
+	(i <= 1) ? next = 1 : next = i;
+
+	buildTree(i, current-1, depth+1, depths);
+	if (current==j) {
+		buildTree(0, 0, depth+1, depths);
+	} else {
+		buildTree(current+1, j, depth+1, depths);
+		}
 
 	return 0;
 }

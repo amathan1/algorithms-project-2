@@ -25,6 +25,8 @@ public:
 
 	int printOBST();
 
+	int findDepth(vector < vector <int> >&);
+
 private:
 
 	float **matrix;

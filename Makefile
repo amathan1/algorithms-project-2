@@ -10,5 +10,14 @@ tromino:
 floyd:
 	g++ floyd.cpp -o floyd.out -g -std=c++11
 
+debug_tromino:
+	gdb tromino.out
+
+debug_obst:
+	gdb obst.out
+
+debug_floyd:
+	gdb floyd.out
+
 clean:
 	rm -f *out
