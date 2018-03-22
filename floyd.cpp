@@ -8,7 +8,7 @@ Floyd::updateMatrix(vector<string> &content)
 	this->dist = (int**)malloc(this->numNodes * sizeof(int*));
 
 	for (int i = 0; i < this->numNodes; i++)	this->dist[i] = (int*)calloc(this->numNodes, sizeof(int));
-	this->path.resize(this->numNodes, vector< vector <int> >(this->numNodes, vector<int>(1)));	
+	this->path.resize(this->numNodes, vector< vector <int> >(this->numNodes, vector<int>(0)));	
 
 	int idx;
 	string curDist = "";
@@ -36,6 +36,9 @@ Floyd::updateMatrix(vector<string> &content)
 int
 Floyd::readFile()
 {
+	/*
+	* Read from file and create the matrix
+	*/
 
 	string line;
 	vector<string> wholeCsv;
@@ -51,19 +54,26 @@ Floyd::readFile()
 	}
 
 	updateMatrix(wholeCsv);
-	cout << "Matrix updated." << endl;
 	return 0;
 }
 
 int 
 Floyd::printMatrices()
 {
-	for (int i = 0; i < numNodes; i++) {
-		for (int j = 0; j < numNodes; j++) {
-			cout << dist[i][j] << " ";
+	/*
+	*Print the shortest paths
+	*/
+
+	for (int i = 0; i < this->numNodes; i++) {
+		for (int j = 0; j < this->numNodes; j++) {
+			cout << i+1 << "->";
+			for (int k = 0; k < this->path[i][j].size(); k++) {
+				cout << this->path[i][j][k]+1 << "->"; 
+			}
+			cout << j+1 << endl;
 		}
-		cout << endl;
 	}
+
 	return 0;
 }
 
@@ -71,33 +81,42 @@ Floyd::printMatrices()
 int
 Floyd::findShortestPaths()
 {	
+	/*
+	*Implementation of Floyd Warshall Algorithm
+	*/
+
 	int total_size;
 	int firstPath, secondPath;
 
-	for (int j = 0; j < this->numNodes; j++) {
-		for (int i = 0; i < this->numNodes; i++) {
-			for (int k = 0; k < this->numNodes; k++) {
+	for (int j = 0; j < this->numNodes; j++) {	// Intermediate nodes
+		for (int i = 0; i < this->numNodes; i++) {	// Starting node
+			for (int k = 0; k < this->numNodes; k++) {	// Ending node
 
-				if(dist[i][k] > (dist[i][j] + dist[j][k])) {
-					dist[i][k] = dist[i][j] + dist[j][k];
-					total_size = path[i][j].size() + path[j][k].size();
-					path[i][k].resize(total_size);
-					
-					firstPath = path[i][j].size();
-					if (firstPath == 1) {
-						path[i][k][0] = j;
-					}	else {
-						for (int m = 0; m < firstPath; m++)
-							path[i][k][m] = path[i][j][m];
+				if(this->dist[i][k] > (this->dist[i][j] + this->dist[j][k])) {	// When an intermediate node has shorter path
+
+					this->dist[i][k] = this->dist[i][j] + this->dist[j][k];
+					total_size = this->path[i][j].size() + this->path[j][k].size();
+					path[i][k].resize(total_size+1);
+
+					if (total_size==0) {
+						this->path[i][k][0] = j;
+						continue;
 					}
-
-					secondPath = path[j][k].size();
-					if (secondPath == 1) {
-						path[j][k][firstPath] = k;
-					}	else {
-						for (int m = 0; m < secondPath; m++) {
-							path[i][k][m+firstPath] = path[j][k][m];
+					
+					firstPath = this->path[i][j].size();
+					if (firstPath != 0) {
+						for (int m = 0; m < firstPath; m++)
+							this->path[i][k][m] = this->path[i][j][m];
+						this->path[i][k][firstPath] = j;
+					} else {
+						this->path[i][k][firstPath] = j;
 						}
+
+					secondPath = this->path[j][k].size();
+					if (secondPath != 0) {
+						for (int m = 0; m < secondPath; m++) {
+							this->path[i][k][m+firstPath+1] = this->path[j][k][m];
+						} 
 					}
 				}
 			}
@@ -117,13 +136,7 @@ main(int argc, char* argv[])
 
 	floyd.readFile();
 
-	cout << "Before finding shortest paths: " << endl;
-
-	floyd.printMatrices();
-
 	floyd.findShortestPaths();
-
-	cout << "After finding shortest paths: " << endl;
 
 	floyd.printMatrices();
 

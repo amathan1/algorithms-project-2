@@ -26,6 +26,9 @@ OBST::OBST(char* args[])
 int
 OBST::findMinCost(vector<float> &costs)
 {
+	/*
+	* Find minimum cost
+	*/
 	int min_idx;
 	float min_val = 999999999;
 	
@@ -43,6 +46,7 @@ OBST::findMinCost(vector<float> &costs)
 float
 OBST::findCost(int i, int j, int k)
 {
+	/*Formula discussed in the class*/
 	return this->matrix[i][k] + this->matrix[k+1][j];
 }
 
@@ -50,6 +54,9 @@ OBST::findCost(int i, int j, int k)
 int
 OBST::updateCost(int i, int j)
 {
+	/*
+	* Update cost in the matrix
+	*/
 
 	vector <float> costs;
 	float initial_cost = 0;
@@ -73,6 +80,9 @@ OBST::updateCost(int i, int j)
 int
 OBST::findOptimalBST()
 {
+	/*
+	* Build Optimal BST Matrix
+	*/
 
 	for (int j = 2; j < this->numNodes+1; j++) {
 		for (int i = 0; i < (this->numNodes-j+1); i++) {
@@ -87,6 +97,9 @@ OBST::findOptimalBST()
 int
 OBST::findDepth(vector < vector <int> > &depths)
 {
+	/*
+	* Finds the maximum depth of tree.
+	*/
 	int depth = depths.size();
 	int cnt = 0;
 	int size;
@@ -112,25 +125,10 @@ OBST::findDepth(vector < vector <int> > &depths)
 int
 OBST::printOBST()
 {
-
-	/* 
-	for (int i = 0; i < numNodes+1; i++) {
-		for (int j = 0; j < numNodes+1; j++) {
-			cout << this->matrix[i][j] << "\t";
-		}
-		cout << endl << endl;
-	}
-
-	cout << "This is roots" << endl;
-
-	for (int i = 0; i < numNodes+1; i++) {
-		for (int j = 0; j < numNodes+1; j++) {
-			cout << this->roots[i][j] << "\t";
-		}
-		cout << endl << endl;
-	}
+	/*
+	* To print the tree from the matrix
 	*/
-
+	
 	vector < vector <int> > depths(numNodes);
 	buildTree(0, this->numNodes, 0, depths);
 
@@ -152,14 +150,17 @@ OBST::printOBST()
 int
 OBST::buildTree(int i, int j, int depth, vector < vector <int> > &depths)
 {
+	/*
+	* Builds the tree using the matrix
+	*/
 	
 	if (i > this->numNodes+1){
 		depths[depth].push_back(0);
 		return 0;
 	}
 
-	if (i == j) {
-		if (i == 0)	{
+	if (i == j) {	// When there's just one node left to add
+		if (i == 0)	{	// When the node has no children, push zeros
 			depths[depth].push_back(0);	
 		} else {
 			depths[depth].push_back(this->roots[j-1][j]);
@@ -174,6 +175,7 @@ OBST::buildTree(int i, int j, int depth, vector < vector <int> > &depths)
 	depths[depth].push_back(current);
 	(i <= 1) ? next = 1 : next = i;
 
+	// Recursively build the tree
 	buildTree(i, current-1, depth+1, depths);
 	if (current==j) {
 		buildTree(0, 0, depth+1, depths);

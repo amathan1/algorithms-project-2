@@ -12,7 +12,7 @@ Tromino
 {
 
 public:
-	Tromino(int k, int r, int c) {this->k = k; this->r = r; this->c = c; this->num = 2*k;}
+	Tromino(int k, int r, int c) {this->k = k; this->r = r; this->c = c; this->num = k*k;}
 
 	int trominoTile();
 
@@ -24,7 +24,7 @@ public:
 
 
 private:
-	int k, r, c, num, cnt = 0;	// Parameters
+	int k, r, c, num, cnt = 1;	// Parameters
 
 	int **tiles;		// Tromino board
 

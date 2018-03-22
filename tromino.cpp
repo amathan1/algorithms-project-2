@@ -117,6 +117,9 @@ Tromino::buildTromino(int row_s, int col_s, int row_e, int col_e, int r_hole, in
 int
 Tromino::printTromino()
 {
+	/*
+	* Prints tromino board
+	*/
 	for (int i = 0; i < this->num; i++) {
 		for (int j = 0; j < this->num; j++) {
 			cout << tiles[i][j] << "\t";
